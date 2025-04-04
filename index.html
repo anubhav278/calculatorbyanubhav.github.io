@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="calculator.css">
 </head>
 <body>
+  <video autoplay muted loop id="bgVideo">
+    <source src="vedio.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+</video>
     <div class="cal">
 <div class="fullbody">
 
@@ -40,10 +44,11 @@
       </div>
       <div class="row5">
         <button onclick="clearDisplay()">AC</button >
-        <button onclick="clearDisplay()">DEL</button>
+        <button onclick="del()">DEL</button>
         
         <button class="operator equal" onclick="calculate()" >=</button>
       </div>
+      
 </div>
 </div> 
     </div>
@@ -54,6 +59,32 @@
     <script>
       let currentInput = '';
   
+      document.addEventListener("keydown", function (event) {
+    const key = event.key;
+
+        if (!isNaN(key)) {
+        appendNumber(key);
+    } 
+    
+    else if (['+', '-', '*', '/'].includes(key)) {
+        appendOperator(key);
+    } 
+   
+    else if (key === "Enter") {
+        calculate();
+    } 
+    
+    else if (key === "Backspace") {
+        del();
+    } 
+   
+    else if (key === ".") {
+        appendDecimal();
+    } 
+    
+    event.preventDefault();
+});
+
       function appendNumber(number) {
         currentInput += number;
         document.getElementById('display').value = currentInput;
